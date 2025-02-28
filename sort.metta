@@ -1,31 +1,34 @@
 (: removeElement (->  (List $t) $t (List $t)))
-(= (removeElement () $x) ())
-(= (removeElement (List $x) ()) (List $x))
+(= (removeElement Nil $x) Nil)
+(= (removeElement (List $x) Nil) (List $x))
 
-(= (removeElement (:: $h $t) $x)
-    (if (== $h $x) $t (:: $h (removeElement $t $x)))
+(= (removeElement (Cons $h $t) $x)
+    (if (== $h $x) $t (Cons $h (removeElement $t $x)))
 )
 
-! (removeElement (:: 99 (:: 88 ())) 00 )
+; ! (removeElement (Cons 99 (Cons 88 Nil)) 00 )
 
 (: findMin (-> (List Number) Number))
-(: helper (->  (List Number) Number Number))
-(= (findMin (:: $h $t)) (helper $t $h))
-(= (findMin ()) ())
+ ; receives list and calls smallest on that list passing the Head of the list as $min and the rest as the list 
+(= (findMin Nil) Nil)
+(= (findMin (Cons $h $t)) (smallest $t $h))
 
-(= (helper () $min) $min)
-(= ( helper (:: $h $t) $min)
-    (if (< $h $min) (helper $t $h) (helper $t $min)))
 
-(= (sorts ()) ())
-(= (sorts (:: $h $t))
+(: smallest (->  (List Number) Number Number))
+ ; receives list and returns minimum by comparing head with the rest of the list
+(= (smallest Nil $min) $min)
+(= ( smallest (Cons $h $t) $min)
+    (if (< $h $min) (smallest $t $h) (smallest $t $min)))
+
+(= (sort Nil) Nil)
+(= (sort (Cons $h $t))
     (let* (
-            ($min (findMin (:: $h $t)))
-            ($removedList (remove (:: $h $t) $min))
+            ($min (findMin (Cons $h $t)))
+            ($removedList (removeElement (Cons $h $t) $min))
         )
     (let () (println! ($removedList))
-        (:: $min (sorts $removedList))
+        (Cons $min (sort $removedList))
     )
 )
 )
-! (sorts (:: 9 (:: 19 (:: 6 (:: 16 (:: 11 (:: 0 ())))))))
+! (sort (Cons 9 (Cons 19 (Cons 6 (Cons 16 (Cons 11 (Cons 0 Nil)))))))
