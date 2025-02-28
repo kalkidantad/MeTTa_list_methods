@@ -1,9 +1,9 @@
- ; append method
+; let $t as tail and $h as head
+; Type definition
+(: append (-> (List $l) $l) (List $l) ) 
+ ; base case
+(= (append Nil $x ) (Cons $x Nil)) 
+ ; recursive case to 
+(= (append (Cons $h $l) $x ) (Cons $h (append $l $x))) 
 
- ; assume $t as tail and $h as head
-
-(: append (-> (List $t) $t) (List $t) ) ; Type definition
-(= (append () $x ) (:: $x ())) ; when empty list found return the appended value
-(= (append (:: $h $t) $x ) (:: $h (append $t $x))) ; recursively add to the end
-
-! (append (:: 1 (:: 5 (:: 10 ()))) 15)
+! (append (Cons 1 (Cons 5 (Cons 10 Nil))) 15)
