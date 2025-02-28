@@ -1,7 +1,6 @@
 
- ; when the list is empty the length is 0 ,
- ; for a list with at least one value
- ; calculate 1 plus the length of tail
+ ; when the list is empty the length is 0
+ ; otherwise, prepend 1's and calculate their sum
 
 (= (length Nil) 0)
 (= (length (Cons $x $xs))
